@@ -32,12 +32,10 @@ function updateLightIntensityPerPixel(){
         if (rainPixelArray[i] == colorLightning){
             const lightningWay = Math.floor(Math.random() * 3) - 1
             rainPixelArray[i - rainWidth + lightningWay] = colorLightning
-            lightningExist = true
         }else{
             rainPixelArray[i] = lightningExist ? colorThunder : 0
         }
     }
-    lightningExist = false
 }
 
 function render(){
@@ -69,8 +67,11 @@ function render(){
 }
 
 function createRainSource(){
+    lightningExist = false
     for (let column = ((rainHeight - 1) * rainWidth); column < numberOfPixel; column++){
-        rainPixelArray[column] = Math.floor(Math.random() * 100) == 1 ? colorLightning : 0
+        const lightningProb = (Math.floor(Math.random() * 100) == 1)
+        rainPixelArray[column] = lightningProb ? colorLightning : 0
+        lightningExist = lightningProb ? true : lightningExist
     }
 }
 
